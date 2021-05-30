@@ -12,6 +12,7 @@ DATE = datetime.now() - timedelta(days=3)
 DATE = DATE.strftime("%Y-%m-%d")
 sender = 'emailID'
 receiver = 'emailID'
+passcode = 'passcode'
 
 
 def get_stock_details():
@@ -82,7 +83,7 @@ def send_mail(html):
         server.starttls()
         server.ehlo()
 
-        server.login(sender, "passcode")
+        server.login(sender, passcode)
         server.sendmail(sender, receiver, msg.as_string())
         logging.info(f'sent mail to the user {receiver}')
 
