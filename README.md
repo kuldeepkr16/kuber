@@ -12,5 +12,12 @@ on daily basis and send email.
 5. run `make get_csv` to fetch the csv from downloads into repo dir
 6. run `make run` to run the script
 
+# OR
+Use Docker
+1. Edit Dockerfile and add email addresses and password
+2. Copy the holdings.csv to current folder. run `cp  ~/Downloads/holdings.csv .`
+3. run `sudo docker build -t kuber .` to build docker
+4. run `sudo docker run -t kuber` to run the script
+
 # To read more about sending email using python - 
 https://realpython.com/python-send-email/
