@@ -12,4 +12,5 @@ get_csv:
 	cp -vf ~/Downloads/holdings.csv ./my_stocks.csv
 
 run:
+	. env_vars.sh
 	python3 main.py
