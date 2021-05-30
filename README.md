@@ -18,3 +18,6 @@ and then edit the script to add to and from emailIDs in global variables.
 
 Run the script using command - 
 python main.py
+
+# To read more about sending email using python - 
+https://realpython.com/python-send-email/
