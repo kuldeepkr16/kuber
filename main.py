@@ -1,18 +1,20 @@
-import yfinance as yf
-from datetime import datetime, timedelta
-import pandas as pd
+import logging
+import os
 import smtplib
+from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import logging
+
+import pandas as pd
+import yfinance as yf
 
 logging.basicConfig(level=logging.INFO)
 stocks_details = pd.read_csv('my_stocks.csv')
 DATE = datetime.now() - timedelta(days=3)
 DATE = DATE.strftime("%Y-%m-%d")
-sender = 'emailID'
-receiver = 'emailID'
-passcode = 'passcode'
+sender = os.environ['GMAIL_APP_S_USER']
+receiver = os.environ['GMAIL_APP_R_USER']
+passcode = os.environ['GMAIL_APP_PASSWORD']
 
 
 def get_stock_details():
@@ -22,9 +24,9 @@ def get_stock_details():
     """
     final_list_ = list()
     for i, config in stocks_details.iterrows():
-        symbol = config.get('symbol')
-        avg_price = config.get('avg_price')
-        quantity = config.get('quantity')
+        symbol = config.get('Instrument')
+        avg_price = config.get('Avg. cost')
+        quantity = config.get('Qty.')
         amount_invested = avg_price * quantity
         logging.info(f"Checking for stock - {symbol}")
         try:
