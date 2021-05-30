@@ -34,35 +34,30 @@ def get_stock_details():
         except Exception as e:
             logging.exception(e)
             raise e
-        sign = '+'
         data = data.tail(1)
         close_price = round(data['Close'][0], 2)
         amount_now = close_price * quantity
-        nume = close_price
-        deno = avg_price
-        if close_price < avg_price:
-            sign = '-'
-            nume = avg_price
-            deno = close_price
-        percent_diff = ((nume - deno) / deno) * 100
+        percent_diff = ((close_price - avg_price) / avg_price) * 100
         percent_diff = round(percent_diff, 2)
-        if sign == '-':
-            percent_diff *= -1
-            profit = 0
+        total_profit = amount_now - amount_invested
+        if total_profit < 0:
             deductions = 0
             final_profit = 0
+            profit_percentage = 0
         else:
-            profit = amount_now - amount_invested
             # 15% tax + 1.01% broker charges
-            deductions = round((0.1601 * profit), 2)
-            final_profit = round((profit - deductions), 2)
+            deductions = round((0.1601 * total_profit), 2)
+            final_profit = round((total_profit - deductions), 2)
+            profit_percentage = round(((final_profit/amount_now) * 100), 2)
 
-        final_list_.append({"stocks": symbol,
-                            "Average Price": avg_price,
+        final_list_.append({"Stocks": symbol,
+                            "Quantity": quantity,
+                            "Avg Price": avg_price,
                             "Current Price": close_price,
-                            "Percentage Change": percent_diff,
-                            "profit": profit, "deductions": deductions,
-                            "final_profit": final_profit})
+                            "% Change": percent_diff,
+                            "Total Profit": total_profit, "Deductions": deductions,
+                            "Final Profit": final_profit,
+                            "Profit %": profit_percentage})
     return final_list_
 
 
@@ -93,7 +88,7 @@ def send_mail(html):
 if __name__ == '__main__':
     final_list = get_stock_details()
     df = pd.DataFrame(final_list)
-    df.sort_values(by='Percentage Change', inplace=True, ascending=False)
+    df.sort_values(by='% Change', inplace=True, ascending=False)
     df.reset_index(drop=True, inplace=True)
     df.index = df.index + 1
     send_mail(df.to_html())
