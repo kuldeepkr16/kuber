@@ -28,6 +28,9 @@ def get_stock_details():
         avg_price = config.get('Avg. cost')
         quantity = config.get('Qty.')
         amount_invested = avg_price * quantity
+        if quantity == 0:
+            logging.info(f"Skipping 0 qty stocks - {symbol}")
+            continue
         logging.info(f"Checking for stock - {symbol}")
         try:
             data = yf.download(f"{symbol}.NS", start=str(DATE))
