@@ -25,4 +25,4 @@ run: install gen_env get_csv
 
 docker_run:	gen_env get_csv
 	docker build -t kuber-app:latest .
-	docker run --env-file docker.env --rm kuber-app:latest python main.py
+	docker run -t --env-file docker.env --rm kuber-app:latest python main.py
