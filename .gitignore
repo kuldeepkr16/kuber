@@ -1,6 +1,7 @@
 env_vars.sh
 bin/**
 include/**
-lib/**
-lib64/**
+lib**/**
 pyvenv.cfg
+docker.env
+my_stocks.csv

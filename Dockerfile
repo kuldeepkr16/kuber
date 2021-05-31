@@ -1,7 +1,6 @@
-FROM python:3
+FROM python:3.9-slim-buster
 WORKDIR /kuber
 COPY requirements.txt main.py ./
 RUN pip install -r requirements.txt
-COPY holdings.csv my_stocks.csv
-ENV GMAIL_APP_S_USER="<senders emailID>" GMAIL_APP_R_USER="<reveivers emailID>" GMAIL_APP_PASSWORD="<password>"
+COPY my_stocks.csv my_stocks.csv
 CMD python3 main.py
