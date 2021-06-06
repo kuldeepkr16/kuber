@@ -38,7 +38,11 @@ def get_stock_details():
             logging.exception(e)
             raise e
         data = data.tail(1)
-        close_price = round(data['Close'][0], 2)
+        try:
+            close_price = round(data['Close'][0], 2)
+        except Exception as e:
+            logging.exception("Most probably delisted stock...")
+            continue
         amount_now = close_price * quantity
         percent_diff = ((close_price - avg_price) / avg_price) * 100
         percent_diff = round(percent_diff, 2)
